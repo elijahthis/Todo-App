@@ -1,0 +1,105 @@
+@font-face {
+  font-family: JosefinSans-Bold;
+  src: url(fonts/JosefinSans-Bold.ttf);
+}
+@font-face {
+  font-family: JosefinSans-Regular;
+  src: url(fonts/JosefinSans-Regular.ttf);
+}
+
+body {
+  font-family: JosefinSans-Regular;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  display: grid;
+  grid-template-rows: 260px 1fr;
+  background-color: #171824;
+  margin: 0px;
+  color: #FFFFFF;
+}
+
+.banner {
+  background-image: url(images/bg-desktop-dark.jpg);
+  font-family: JosefinSans-Bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+h1 {
+  font-size: 42px;
+  letter-spacing: 19.2px;
+  display: inline-block;
+  margin: 0px;
+}
+
+header {
+  margin-top: 69.5px;
+  height: 78px;
+}
+
+header, #new-todo, .rest >* {
+  width: 512px;
+}
+
+.rest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.crux {
+  position: relative;
+  top: -100px;
+}
+
+#new-todo, .item-todo, .foot {
+  background-color: #25273C;
+  box-sizing: border-box;
+  
+  height: 54px;
+  padding: 15px 23px;
+}
+
+#new-todo {
+  margin-bottom: 21px;
+}
+
+li {
+  list-style-type: circle;
+}
+
+input[type=text] {
+  border: 0px;
+  background-color: #25273C;
+  
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.foot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 44px;
+  font-size: 15px;
+}
+
+.instructions {
+  width: inherit;
+  position: absolute;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 15px;
+  color: #535369;
+}
+
+.attribution {
+  width: inherit;
+  margin: auto 0;
+  
+  padding: 10px 0;
+}
