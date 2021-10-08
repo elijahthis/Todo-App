@@ -7,25 +7,55 @@
   src: url(fonts/JosefinSans-Regular.ttf);
 }
 
+:root {
+  --checkbox-gradient: linear-gradient(135deg, #84BEEA 10%, #7F53C1);
+  --banner-img: url(images/bg-desktop-dark.jpg);
+  --main-background: #25273C;
+  --surround-background: #171824;
+}
+
 body {
   font-family: JosefinSans-Regular;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
-  display: grid;
-  grid-template-rows: 260px 1fr;
-  background-color: #171824;
+  
+  background-color: var(--surround-background);
   margin: 0px;
   color: #FFFFFF;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+main {
+  display: grid;
+  grid-template-rows: 260px 1fr;
 }
 
 .banner {
-  background-image: url(images/bg-desktop-dark.jpg);
+  background-image: var(--banner-img);
   font-family: JosefinSans-Bold;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
+
+header {
+  margin-top: 69.5px;
+  height: 78px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+header, #new-todo, .rest >* {
+  width: 512px;
+}
+
 h1 {
   font-size: 42px;
   letter-spacing: 19.2px;
@@ -33,14 +63,11 @@ h1 {
   margin: 0px;
 }
 
-header {
-  margin-top: 69.5px;
-  height: 78px;
+#theme-selector-image {
+  height: 43px;
 }
 
-header, #new-todo, .rest >* {
-  width: 512px;
-}
+
 
 .rest {
   display: flex;
@@ -54,7 +81,7 @@ header, #new-todo, .rest >* {
 }
 
 #new-todo, .item-todo, .foot {
-  background-color: #25273C;
+  background-color: var(--main-background);
   box-sizing: border-box;
   
   height: 54px;
@@ -71,13 +98,112 @@ li {
 
 input[type=text] {
   border: 0px;
-  background-color: #25273C;
+  background-color: var(--main-background);
   
   font-family: inherit;
   font-style: inherit;
   font-weight: inherit;
   font-size: inherit;
   color: inherit;
+  width: 100%;
+}
+input[type=text]:focus {
+    outline: none;
+}
+
+input[type=submit] {
+  display: none; 
+}
+
+.todos {
+  box-shadow: 0px 40px 50px 10px #11121b;
+  height: auto;
+}
+
+.item-todo{
+    border-bottom: 1px solid #535369;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    cursor: grab;
+
+}
+.item-todo img {
+    height: 20px;
+}
+
+label {
+  display: inline-block;
+  margin-left: 20px;
+  max-width: 380px;
+
+  overflow: scroll;
+  -ms-overflow-style: none;   /* hide scrollbar - Edge */
+  scrollbar-width: none;      /* hide scrollbar - Firefox */
+}
+label::-webkit-scrollbar{
+  display: none;              /* hide scrollbar - Chrome */
+}
+
+.item-todo.dragging {
+  filter: brightness(0.7);
+  cursor: grabbing;
+}
+.cancel {
+    cursor: pointer;
+}
+
+input[type=checkbox] {
+  visibility: hidden;
+}
+
+.checkbox-border {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--checkbox-gradient);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+}
+
+.checkbox-wrapper {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--main-background);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  transition: background 2s;
+}
+
+.checkbox-wrapper.checked {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--checkbox-gradient);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#checkbox-image {
+  height: 7px;
+  visibility: hidden;
 }
 
 .foot {
@@ -86,6 +212,24 @@ input[type=text] {
   justify-content: space-between;
   height: 44px;
   font-size: 15px;
+  color: #535369;
+  box-shadow: 0px 20px 50px 0px #11121b;
+}
+
+.filters {
+    width: 160px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.filters >*:hover, #clear:hover {
+  cursor: pointer;
+  color: #FFFFFF;
+  transition: color 1s;
+}
+
+.active, .active:hover {
+  color: #5378C9;
 }
 
 .instructions {
@@ -99,7 +243,6 @@ input[type=text] {
 
 .attribution {
   width: inherit;
-  margin: auto 0;
   
   padding: 10px 0;
 }
