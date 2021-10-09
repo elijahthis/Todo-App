@@ -10,10 +10,11 @@ let allBtn = document.querySelector("#all-btn");
 let activeBtn = document.querySelector("#active-btn");
 let completedBtn = document.querySelector("#completed-btn");
 let clearBtn = document.querySelector("#clear");
+let themeBtn = document.querySelector("#theme-selector-image");
 
 let newTodo, todoDIV, todoSpan;
 let dragStartIndex;
-
+let theme = true;		// true means DARK mode
 
 function todoCreator(content) {
 	//this function creates the todo object.
@@ -21,6 +22,19 @@ function todoCreator(content) {
 	this.content = content;
 	this.completed = false;
 	this.node;
+}
+
+const toggleTheme = () => {
+	if (theme) {
+		themeBtn.src = "images/icon-moon.svg";
+		document.body.classList.add("light");
+		theme = !theme;
+	}
+	else {
+		themeBtn.src = "images/icon-sun.svg";
+		document.body.classList.remove("light");
+		theme = !theme;
+	}
 }
 
 function showTodo(todoWrapper, todoObject) {
@@ -71,6 +85,7 @@ const handleSubmit = (ev) => {
 	document.querySelectorAll(".cancel").forEach(btn => {
 		btn.addEventListener("click", handleDelete);
 	})
+	hideCancel();
 }
 
 const handleDelete = (ev) => {
@@ -154,14 +169,14 @@ const handleChecked = (objList, ev) => {
 		ev.currentTarget.firstChild.classList.add("checked");
 		todoObject.node.childNodes[2].firstChild.firstChild.style.visibility = "visible";
 		todoObject.node.firstChild.childNodes[1].style.textDecoration = "line-through"
-		todoObject.node.firstChild.childNodes[1].style.color = "#535369"
+		todoObject.node.classList.add("true");
 	}
 	else {
 		todoObject.completed = false;
 		ev.currentTarget.firstChild.classList.remove("checked");
 		todoObject.node.childNodes[2].firstChild.firstChild.style.visibility = "hidden";
 		todoObject.node.firstChild.childNodes[1].style.textDecoration = "";
-		todoObject.node.firstChild.childNodes[1].style.color = "#FFFFFF";
+		todoObject.node.classList.remove("true");
 	}
 	console.log(objList);
 }
@@ -222,6 +237,15 @@ function clearCompleted() {
 	})
 }
 
+const hideCancel = () => {
+	todo_list.forEach(obj => {
+		obj.node.addEventListener("mouseover", function () { obj.node.childNodes[1].classList.add("show") })
+	})
+	todo_list.forEach(obj => {
+		obj.node.addEventListener("mouseleave", function () { obj.node.childNodes[1].classList.remove("show") })
+	})
+}
+
 
 const displayCount = () => {
 	completed_todos = todo_list.filter(obj => {
@@ -234,9 +258,9 @@ const displayCount = () => {
 setInterval(displayCount, 50);
 
 
-
 todoForm.addEventListener("submit", handleSubmit);
-completedBtn.addEventListener("click", function () { handleCompleted() });
-activeBtn.addEventListener("click", function () { handleActive() });
-allBtn.addEventListener("click", function () { handleAll() });
-clearBtn.addEventListener("click", function () { clearCompleted() });
+completedBtn.addEventListener("click", handleCompleted);
+activeBtn.addEventListener("click", handleActive);
+allBtn.addEventListener("click", handleAll);
+clearBtn.addEventListener("click", clearCompleted);
+themeBtn.addEventListener("click", toggleTheme)
