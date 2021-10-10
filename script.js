@@ -1,14 +1,12 @@
 let todo_list = [];				// array of todo objects
-let todo_el_list = [];			// array of todo nodes(elements)
 
 
 let todoForm = document.querySelector(".todo-form");
-let input = document.querySelector("input[type=text]");
 let todos = document.querySelector(".todos");
 
-let allBtn = document.querySelector("#all-btn");
-let activeBtn = document.querySelector("#active-btn");
-let completedBtn = document.querySelector("#completed-btn");
+let allBtns = document.querySelectorAll(".all-btn");
+let activeBtns = document.querySelectorAll(".active-btn");
+let completedBtns = document.querySelectorAll(".completed-btn");
 let clearBtn = document.querySelector("#clear");
 let themeBtn = document.querySelector("#theme-selector-image");
 
@@ -60,7 +58,6 @@ function showTodo(todoWrapper, todoObject) {
 	todoSpan = document.querySelectorAll(".checkbox-border");
 
 	todoObject.node = todoDIV;
-	todo_el_list.push(todoDIV);
 
 	todoSpan[todoSpan.length - 1].addEventListener("click", handleChecked.bind(null, todo_list), false);
 
@@ -72,8 +69,9 @@ function showTodo(todoWrapper, todoObject) {
 const handleSubmit = (ev) => {
 	//this function handles what happens when you hit submit
 
+
 	ev.preventDefault();				//stop it from reloading
-	let todoContent = input.value;		//we feed this text to the todoCreator function
+	let todoContent = todoForm["todo-input"].value;		//we feed this text to the todoCreator function
 
 	newTodo = new todoCreator(todoContent);
 	todo_list.push(newTodo);
@@ -85,24 +83,23 @@ const handleSubmit = (ev) => {
 	document.querySelectorAll(".cancel").forEach(btn => {
 		btn.addEventListener("click", handleDelete);
 	})
+	document.querySelectorAll(".item-todo")[0].setAttribute("id", "first");
 	hideCancel();
 }
 
 const handleDelete = (ev) => {
 	let targetElement = ev.target;
 	let element = targetElement.parentElement;
-	const content = element.childNodes[0].childNodes[1].textContent.trim();
 
-	todo_list = todo_list.filter((el) => {
-		return el.content != content;
-	})
-	todo_el_list = todo_el_list.filter((el) => {
-		return el != element;
+	todo_list = todo_list.filter((obj) => {
+		if (obj.node !== element) {
+			return obj;
+		}
 	})
 
 	element.style.display = "none";
 
-	console.log(todo_el_list);
+	console.log(todo_list);
 	console.log(element);
 
 }
@@ -117,8 +114,8 @@ function handleDragDrop(element) {
 
 	element.addEventListener("dragstart", (ev) => {
 		element.classList.add("dragging");
-		dragStartIndex = todo_el_list.findIndex((elx) => {
-			if (elx === ev.target) return ev.target
+		dragStartIndex = todo_list.findIndex((obj) => {
+			if (obj.node === ev.target) return obj
 		});
 	});
 	element.addEventListener("dragend", (ev) => {
@@ -129,8 +126,8 @@ function handleDragDrop(element) {
 		ev.preventDefault();
 	});
 	element.addEventListener("drop", (ev) => {
-		let dragEndIndex = todo_el_list.findIndex((elx) => {
-			if (elx === ev.target) return ev.target
+		let dragEndIndex = todo_list.findIndex((obj) => {
+			if (obj.node === ev.target) return obj
 		});
 		swapItems(dragStartIndex, dragEndIndex, todos);
 	});
@@ -138,18 +135,14 @@ function handleDragDrop(element) {
 
 function swapItems(fromIndex, toIndex, parent) {
 	if (fromIndex < toIndex) {
-		parent.insertBefore(todo_el_list[fromIndex], todo_el_list[toIndex].nextSibling);
+		parent.insertBefore(todo_list[fromIndex].node, todo_list[toIndex].node.nextSibling);
 
-		const tempRemoved = todo_el_list.splice(fromIndex, 1)[0];
-		todo_el_list.splice(toIndex, 0, tempRemoved);
 		const tempObjRemoved = todo_list.splice(fromIndex, 1)[0];
 		todo_list.splice(toIndex, 0, tempObjRemoved);
 	}
 	else if (fromIndex > toIndex) {
-		parent.insertBefore(todo_el_list[fromIndex], todo_el_list[toIndex]);
+		parent.insertBefore(todo_list[fromIndex].node, todo_list[toIndex].node);
 
-		const tempRemoved = todo_el_list.splice(fromIndex, 1)[0];
-		todo_el_list.splice(toIndex, 0, tempRemoved);
 		const tempObjRemoved = todo_list.splice(fromIndex, 1)[0];
 		todo_list.splice(toIndex, 0, tempObjRemoved);
 	}
@@ -184,9 +177,9 @@ const handleChecked = (objList, ev) => {
 
 //the following three functions filter the todos according to whether they have been completed or not.
 const handleCompleted = () => {
-	allBtn.classList.remove("active");
-	activeBtn.classList.remove("active");
-	completedBtn.classList.add("active");
+	allBtns.forEach(allB => allB.classList.remove("active"));
+	activeBtns.forEach(activeB => activeB.classList.remove("active"));
+	completedBtns.forEach(completedB => completedB.classList.add("active"));
 
 	todo_list.forEach(obj => {
 		obj.node.style.display = "";
@@ -199,9 +192,9 @@ const handleCompleted = () => {
 	})
 }
 const handleActive = () => {
-	allBtn.classList.remove("active");
-	activeBtn.classList.add("active");
-	completedBtn.classList.remove("active");
+	allBtns.forEach(allB => allB.classList.remove("active"));
+	activeBtns.forEach(activeB => activeB.classList.add("active"));
+	completedBtns.forEach(completedB => completedB.classList.remove("active"));
 
 	todo_list.forEach(obj => {
 		obj.node.style.display = "";
@@ -214,9 +207,9 @@ const handleActive = () => {
 	})
 }
 const handleAll = () => {
-	allBtn.classList.add("active");
-	activeBtn.classList.remove("active");
-	completedBtn.classList.remove("active");
+	allBtns.forEach(allB => allB.classList.add("active"));
+	activeBtns.forEach(activeB => activeB.classList.remove("active"));
+	completedBtns.forEach(completedB => completedB.classList.remove("active"));
 
 	todo_list.forEach(obj => {
 		obj.node.style.display = "";
@@ -225,14 +218,12 @@ const handleAll = () => {
 
 function clearCompleted() {
 	todo_list.forEach(obj => {
-		elem = obj.node;
 		if (obj.completed) {
-			todo_el_list.splice(todo_el_list.findIndex(el => el === elem), 1);
-			todos.removeChild(elem);
-			todo_list.splice(todo_list.findIndex(objx => objx === obj), 1);
-
-			console.log(todo_list);
-			console.log(todo_el_list);
+			todos.removeChild(obj.node);
+			todo_list = todo_list.filter(objx => {
+				if (objx !== obj) { return obj }
+			});
+			console.log(obj);
 		}
 	})
 }
@@ -259,8 +250,8 @@ setInterval(displayCount, 50);
 
 
 todoForm.addEventListener("submit", handleSubmit);
-completedBtn.addEventListener("click", handleCompleted);
-activeBtn.addEventListener("click", handleActive);
-allBtn.addEventListener("click", handleAll);
+completedBtns.forEach(btn => { btn.addEventListener("click", handleCompleted) });
+activeBtns.forEach(btn => { btn.addEventListener("click", handleActive) });
+allBtns.forEach(btn => { btn.addEventListener("click", handleAll) });
 clearBtn.addEventListener("click", clearCompleted);
 themeBtn.addEventListener("click", toggleTheme)

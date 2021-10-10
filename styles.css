@@ -9,7 +9,6 @@
 
 :root {
   --checkbox-gradient: linear-gradient(135deg, #84BEEA 10%, #7F53C1);
-  --banner-img: url(images/bg-desktop-dark.jpg);
   --main-background: #25273C;
   --surround-background: #171824;
   --faded-col-1: #4C4E63;
@@ -19,7 +18,6 @@
 }
 .light {
   --checkbox-gradient: linear-gradient(135deg, #84BEEA 10%, #7F53C1);
-  --banner-img: url(images/bg-desktop-light.jpg);
   --main-background: #FFFFFF;
   --surround-background: #FAFAFA;
   --faded-col-1: #E3E3E7;
@@ -31,8 +29,14 @@
 @media screen and (min-width: 600px) {
 
   :root {
-    
+    --banner-img: url(images/bg-desktop-dark.jpg);
+    --primary-width: 512px
   }
+  .light {
+    --banner-img: url(images/bg-desktop-light.jpg);
+  }
+
+
   body {
     font-family: JosefinSans-Regular;
     font-style: normal;
@@ -56,6 +60,7 @@
   
   .banner {
     background-image: var(--banner-img);
+    background-size: cover;
     font-family: JosefinSans-Bold;
     display: flex;
     flex-direction: row;
@@ -72,7 +77,7 @@
   }
   
   header, #new-todo, .rest >* {
-    width: 512px;
+    width: var(--primary-width);
   }
   
   h1 {
@@ -104,6 +109,7 @@
     
     height: 54px;
     padding: 15px 23px;
+    border-radius: 5px;
   }
   
   #new-todo {
@@ -136,13 +142,21 @@
   .todos {
     box-shadow: 0px 40px 50px 10px #11121b;
     height: auto;
-  }
+    
+}
   .light .todos {
     box-shadow: 0px 40px 50px 10px #F4F4F4;
+  }
+
+  
+  #first {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
   
   .item-todo{
       border-bottom: 1px solid var(--faded-col-1);
+      border-radius: 0px;
   
       display: flex;
       flex-direction: row;
@@ -203,6 +217,7 @@
     justify-content: center;
     cursor: pointer;
     align-items: center;
+    transition: background 2s;
   }
   
   .checkbox-wrapper {
@@ -245,6 +260,8 @@
     font-size: 15px;
     color: var(--faded-col-2);
     box-shadow: 0px 20px 50px 0px #11121b;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
   }
   .light .foot {
     box-shadow: 0px 20px 50px 0px #F4F4F4;
@@ -264,6 +281,10 @@
   
   .active, .active:hover {
     color: #5378C9;
+  }
+
+  .mobile-filters {
+    display: none;
   }
   
   .instructions {
@@ -283,14 +304,21 @@
 
 
 @media screen and (max-width: 600px) {
-  /* :root {
-    
-  } */
+
+  :root {
+    --banner-img: url(images/bg-mobile-dark.jpg);
+    --primary-width: 278px;
+  }
+  .light {
+    --banner-img: url(images/bg-mobile-light.jpg);
+  }
+
+
   body {
     font-family: JosefinSans-Regular;
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 12px;
     
     background-color: var(--surround-background);
     margin: 0px;
@@ -304,11 +332,12 @@
   
   main {
     display: grid;
-    grid-template-rows: 260px 1fr;
+    grid-template-rows: 170px 1fr;
   }
   
   .banner {
     background-image: var(--banner-img);
+    background-size: cover;
     font-family: JosefinSans-Bold;
     display: flex;
     flex-direction: row;
@@ -316,8 +345,8 @@
   }
   
   header {
-    margin-top: 69.5px;
-    height: 78px;
+    margin-top: 49px;
+    height: 40px;
   
     display: flex;
     flex-direction: row;
@@ -325,19 +354,19 @@
   }
   
   header, #new-todo, .rest >* {
-    width: 512px;
+    width: var(--primary-width);
   }
   
   h1 {
-    font-size: 42px;
-    letter-spacing: 19.2px;
+    font-size: 24px;
+    letter-spacing: 12px;
     display: inline-block;
     margin: 0px;
     color: #FFFFFF;
   }
   
   #theme-selector-image {
-    height: 43px;
+    height: 28px;
   }
   
   .rest {
@@ -348,19 +377,20 @@
   
   .crux {
     position: relative;
-    top: -100px;
+    top: -65px;
   }
   
   #new-todo, .item-todo, .foot {
     background-color: var(--main-background);
     box-sizing: border-box;
     
-    height: 54px;
-    padding: 15px 23px;
+    height: 41px;
+    border-radius: 5px;
+    padding: 12px 15px;
   }
   
   #new-todo {
-    margin-bottom: 21px;
+    margin-bottom: 13.6px;
   }
   
   li {
@@ -393,9 +423,15 @@
   .light .todos {
     box-shadow: 0px 40px 50px 10px #F4F4F4;
   }
+
+  #first {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
   
   .item-todo{
       border-bottom: 1px solid var(--faded-col-1);
+      border-radius: 0px;
   
       display: flex;
       flex-direction: row;
@@ -409,13 +445,13 @@
     color: var(--faded-col-1);
   }
   .item-todo img {
-      height: 20px;
+      height: 15px;
   }
   
   label {
     display: inline-block;
     margin-left: 20px;
-    max-width: 380px;
+    max-width: 175px;
   
     overflow: scroll;
     -ms-overflow-style: none;   /* hide scrollbar - Edge */
@@ -445,8 +481,8 @@
   
   .checkbox-border {
     position: absolute;
-    width: 22px;
-    height: 22px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     background: var(--checkbox-gradient);
     box-sizing: border-box;
@@ -459,8 +495,8 @@
   }
   
   .checkbox-wrapper {
-    width: 18px;
-    height: 18px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--main-background);
     box-sizing: border-box;
@@ -474,8 +510,8 @@
   }
   
   .checkbox-wrapper.checked {
-    width: 18px;
-    height: 18px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--checkbox-gradient);
     box-sizing: border-box;
@@ -486,7 +522,7 @@
     align-items: center;
   }
   #checkbox-image {
-    height: 7px;
+    height: 5px;
     visibility: hidden;
   }
   
@@ -494,20 +530,23 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 44px;
-    font-size: 15px;
+    height: 36px;
+    font-size: 10px;
     color: var(--faded-col-2);
     box-shadow: 0px 20px 50px 0px #11121b;
-  }
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
   .light .foot {
     box-shadow: 0px 20px 50px 0px #F4F4F4;
   }
   
   .filters {
-      width: 160px;
+      /* width: 160px;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: space-between; */
+      display: none;
   }
   .filters >*:hover, #clear:hover {
     cursor: pointer;
@@ -519,12 +558,39 @@
     color: #5378C9;
   }
   
+
+  .mobile-filters {
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 12px;
+    color: var(--faded-col-2);
+
+    background-color: var(--main-background);
+    box-sizing: border-box;
+    border-radius: 5px;
+    
+    height: 41px;
+    padding: 12px 32px;
+    margin-top: 10px;
+  }
+  .mobile-filters >*:hover {
+    cursor: pointer;
+    color: var(--hover-col);
+    transition: color 1s;
+  }
+  .mobile-filters .active:hover {
+    color: #5378C9;
+  }
+
+
   .instructions {
     width: inherit;
     position: absolute;
     margin-top: 30px;
     text-align: center;
-    font-size: 15px;
+    font-size: 12px;
     color: var(--faded-col-2);
   }
   

@@ -36,7 +36,8 @@
 		<section class="rest">
 			<div class="crux">
 				<div id="new-todo">
-					<form class="todo-form"><input type="text" /> <input type="submit" /> </form>
+					<form class="todo-form"><input type="text" name="todo-input" placeholder="Create a new todo..." /> <input
+							type="submit" /> </form>
 				</div>
 				<div class="todos">
 					<!-- <div class="item-todo">
@@ -51,11 +52,16 @@
 						<!-- Add dynamic number --> items left
 					</span>
 					<span class="filters">
-						<a class="active" id="all-btn">All</a>
-						<a id="active-btn">Active</a>
-						<a id="completed-btn">Completed</a>
+						<a class="all-btn active">All</a>
+						<a class="active-btn">Active</a>
+						<a class="completed-btn">Completed</a>
 					</span>
 					<span id="clear">Clear Completed</span>
+				</div>
+				<div class="mobile-filters">
+					<a class="all-btn active">All</a>
+					<a class="active-btn">Active</a>
+					<a class="completed-btn">Completed</a>
 				</div>
 
 				<div class="instructions">Drag and drop to reorder list</div>
